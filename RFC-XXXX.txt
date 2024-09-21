@@ -93,15 +93,15 @@ b) Multiple candidates per party:
 Note: [A], [B], [C] represent party logos, and [Photo] represents candidate photos.
 
 3.3. Review and Confirmation
-+---------------------------+
-|  REVIEW YOUR SELECTIONS   |
-|                           |
-| President: Candidate X    |
-| Senator: Candidate Y      |
++----------------------------+
+|  REVIEW YOUR SELECTIONS    |
+|                            |
+| President: Candidate X     |
+| Senator: Candidate Y       |
 | Representative: Candidate Z|
-|                           |
-| [CONFIRM]    [EDIT]       |
-+---------------------------+
+|                            |
+| [CONFIRM]    [EDIT]        |
++----------------------------+
 
 3.4. Ballot Printing
 
