@@ -1,0 +1,271 @@
+RFC XXXX: Especificación del Sistema Unificado de Votación Electrónica
+Estado: Borrador
+Fecha: 10 de julio de 2024
+Resumen
+Este documento especifica un sistema unificado de votación electrónica diseñado para abordar vulnerabilidades comunes en los sistemas existentes a nivel mundial. Su objetivo es proporcionar una experiencia de votación segura, transparente y fácil de usar, garantizando al mismo tiempo la integridad y verificabilidad de los resultados electorales.
+
+Introducción
+
+Los sistemas de votación electrónica se han implementado en varios países con resultados mixtos. Muchos sistemas han mostrado vulnerabilidades que podrían potencialmente comprometer la integridad de las elecciones. Este RFC propone un enfoque estandarizado para la votación electrónica que prioriza la seguridad, la usabilidad y la transparencia.
+Este RFC propone un enfoque estandarizado para la votación electrónica que prioriza la seguridad, la usabilidad y la transparencia. Una característica clave de este sistema es que permite a los votantes individuales actuar como auditores de sus propias mesas electorales, asegurando la precisión del recuento de votos y mejorando la confianza general en el proceso electoral.
+
+2. Descripción General del Sistema
+
+El sistema propuesto consta de los siguientes componentes:
+
+2.1. Máquina de Votación
+- Interfaz gráfica de usuario para la selección de candidatos
+- Impresora para producir papeletas con códigos QR
+- Diseño seguro y aislado para prevenir ataques basados en red
+- Unidad de DVD para cargar la información de los candidatos
+
+2.2. Aplicación Móvil
+- Escáner de códigos QR para el conteo y verificación de votos
+- Transmisión segura de datos al sistema de monitoreo central
+
+2.3. Sistema de Monitoreo Central
+- Agrega y analiza los datos de votación
+- Proporciona actualizaciones en tiempo real y resultados finales
+
+2.4. Almacenamiento de Información de Candidatos
+- Información de candidatos y partidos almacenada en DVDs de solo lectura
+- Los DVDs son medios de escritura única para prevenir modificaciones
+- Contenido fácilmente auditable y verificable
+
+3. Proceso de Votación
+
+3.1. Autenticación del Votante
+
+- Los votantes deben registrarse con suficiente antelación a la elección para permitir una distribución adecuada entre las mesas electorales.
+- A cada mesa electoral se le asigna una lista específica de votantes elegibles.
+- Los tres trabajadores electorales en cada mesa deben poseer esta lista.
+- Cuando un votante llega, debe presentar un documento de identificación válido.
+- Los trabajadores electorales corroboran la identidad del votante contra su lista.
+- Una vez verificado, el votante es marcado como habiendo votado para prevenir la doble votación.
+- Una vez verificado y marcado como habiendo votado, se sumerge el dedo del votante en tinta indeleble.
+  Esta tinta no debe ser fácilmente removible el día de la votación, previniendo múltiples intentos de votación con diferentes documentos de identificación.
+- El uso de tinta indeleble sirve como una barrera física visible para evitar la votación repetida, complementando el registro electrónico.
+
+3.2. Interfaz de Selección de Candidatos
+
+El sistema admite dos tipos de pantallas de selección de candidatos:
+
+a) Un candidato por partido:
++---------------------------+
+|  ELECCIÓN PRESIDENCIAL    |
+|                           |
+| [ ] Partido A [A] [Foto]  |
+|     Candidato X           |
+| [ ] Partido B [B] [Foto]  |
+|     Candidato Y           |
+| [ ] Partido C [C] [Foto]  |
+|     Candidato Z           |
+|                           |
+|  [SIGUIENTE]  [ANTERIOR]  |
++---------------------------+
+
+b) Múltiples candidatos por partido:
++---------------------------+
+|  ELECCIÓN SENATORIAL      |
+|                           |
+| [ ] Partido A [A]         |
+| [ ] Partido B [B]         |
+| [ ] Partido C [C]         |
+|                           |
+|  [SIGUIENTE]  [ANTERIOR]  |
++---------------------------+
+
+[Después de la selección del partido]
+
++---------------------------+
+|  CANDIDATOS DEL PARTIDO A |
+|                           |
+| [ ] Candidato 1 [Foto]    |
+| [ ] Candidato 2 [Foto]    |
+| [ ] Candidato 3 [Foto]    |
+|                           |
+|  [SIGUIENTE]  [ANTERIOR]  |
++---------------------------+
+
+Nota: [A], [B], [C] representan los logotipos de los partidos, y [Foto] representa las fotos de los candidatos.
+
+3.3. Revisión y Confirmación
++---------------------------+
+|  REVISE SUS SELECCIONES   |
+|                           |
+| Presidente: Candidato X   |
+| Senador: Candidato Y      |
+| Representante: Candidato Z|
+|                           |
+| [CONFIRMAR]  [EDITAR]     |
++---------------------------+
+
+3.4. Impresión de la Papeleta
+
+Al confirmar, el sistema imprime una papeleta que contiene:
+- Lista de candidatos seleccionados
+- Código QR con la información del voto
+
+El código QR debe estar sin encriptar y ser legible por cualquier dispositivo estándar de escaneo de códigos QR. Contiene información del voto en el siguiente formato:
+
+{
+  "uid": "abc123xyz789",
+  "presidente": "Jane Doe",
+  "senador": "John Smith",
+  "representante": "Alice Johnson"
+}
+
+4. Proceso de Conteo de Votos
+
+4.1. Requisitos para los Trabajadores Electorales
+
+- Los lugares de votación tendrán múltiples mesas electorales.
+- Cada mesa electoral debe tener un número impar de trabajadores electorales (mínimo 3) para resolver cualquier discrepancia por mayoría simple.
+- Todos los trabajadores de una mesa deben contar los votos de manera independiente.
+- Los trabajadores deben firmar colectivamente el informe final antes de su presentación.
+
+4.2. Conteo mediante la Aplicación Móvil
+- La aplicación escanea los códigos QR en las papeletas
+- Cuenta los votos para cada cargo
+- Genera informes para verificación
+
+4.3. Monitoreo Central
+- Agrega datos de todos los lugares de votación
+- Proporciona actualizaciones en tiempo real
+- Anuncia los resultados finales para cada cargo
+
+5. Consideraciones de Seguridad
+
+5.1. Encriptación y Protección de Datos
+[Por ampliar: métodos de encriptación, protocolos de protección de datos]
+
+5.2. Pistas de Auditoría
+[Por ampliar: mecanismos de registro, cadena de custodia para papeletas y equipos]
+
+5.3. Transparencia y Verificación:
+- Los informes firmados por los trabajadores electorales deben transmitirse en un formato ampliamente compatible y conocido (por ejemplo, PDF).
+- Estos informes deben ser accesibles a través de la interfaz pública del sistema de votación.
+- Esto permite que cualquier votante acceda al sistema y verifique el recuento de su propia mesa electoral.
+- Cada votante es responsable de verificar la exactitud de los datos de su mesa electoral, actuando efectivamente como un controlador de la decisión popular.
+
+5.4. Integridad de la Información de los Candidatos
+- La información de los candidatos y partidos se almacena en DVDs de solo lectura
+- Los DVDs son producidos y distribuidos por la autoridad electoral
+- Cada DVD contiene una firma digital para verificación
+- Las máquinas de votación verifican la firma digital del DVD antes de su uso
+- Los trabajadores electorales y observadores pueden auditar fácilmente el contenido de los DVDs
+
+6. Consideraciones de Privacidad
+
+6.1. Anonimato del Votante
+
+- La información de la papeleta no debe ser rastreable a votantes individuales.
+- La máquina de votación no debe almacenar ninguna información que pueda vincular una papeleta a un votante específico o a una hora de votación.
+
+6.2. Verificación y Reconciliación de Papeletas
+
+- Los trabajadores electorales deben reconciliar el número de votantes marcados en su lista con el número de papeletas impresas.
+- Si hay más papeletas que votantes marcados:
+  - Las papeletas excedentes se retiran al azar antes del conteo.
+  - Este proceso debe ser observado por todos los trabajadores electorales y cualquier observador autorizado.
+- Si hay menos papeletas que votantes marcados:
+  - Esta discrepancia debe ser anotada en el informe oficial.
+  - Se puede iniciar una investigación para entender la causa (por ejemplo, mal funcionamiento de la máquina, error humano).
+  - Las papeletas disponibles se cuentan tal como están, con la discrepancia claramente documentada.
+
+6.3. Identificadores de Voto
+
+- Cada papeleta contiene un identificador único (UID) en el código QR.
+- El UID se utiliza únicamente para prevenir el doble conteo por los lectores de códigos QR.
+- Los UIDs no deben contener ni derivarse de ninguna información que pueda usarse para rastrear el voto, como:
+  - Fecha u hora del voto
+  - Identificación de la máquina de votación
+  - Ubicación de la mesa electoral
+- El algoritmo para generar UIDs debe producir identificadores aleatorios y no secuenciales.
+
+6.4. Reemplazo de Máquinas de Votación
+
+- Si se encuentra que una máquina de votación es defectuosa y necesita ser reemplazada:
+  - El reemplazo no debe afectar la validez de los votos ya emitidos en la máquina defectuosa.
+  - Esto se asegura por la falta de información específica de la máquina en los UIDs de las papeletas.
+  - Los trabajadores electorales deben documentar el reemplazo de la máquina en su informe oficial, incluyendo el número de votos emitidos antes y después del reemplazo.
+
+6.5. Protección de Datos
+
+- Todos los componentes electrónicos del sistema de votación deben emplear encriptación fuerte para los datos en reposo y en tránsito.
+- El acceso a las listas de votantes y datos de votación debe ser estrictamente controlado y registrado.
+- Después de la elección, los datos deben ser archivados de forma segura o destruidos de acuerdo con las leyes y regulaciones pertinentes.
+
+7. Características de Accesibilidad
+
+7.1. Mesas Electorales Dedicadas
+
+- Cada lugar de votación debe tener al menos una mesa electoral dedicada para votantes con discapacidades.
+- Estas mesas deben estar equipadas con varios dispositivos de asistencia y atendidas por personal capacitado.
+
+7.2. Proceso de Votación para Votantes con Discapacidad
+
+- Un trabajador electoral puede asistir al votante para llegar y acceder a la máquina de votación.
+- El trabajador electoral debe dejar solo al votante durante el proceso de votación real para garantizar la privacidad e independencia.
+
+7.3. Tecnologías de Asistencia
+
+Las máquinas de votación en las mesas electorales accesibles deben estar equipadas con lo siguiente:
+
+a) Para votantes con discapacidad visual:
+   - Auriculares para retroalimentación de audio del contenido de la pantalla
+   - Pantallas de letra grande con tamaños de fuente ajustables y opciones de alto contraste
+   - Teclados o superposiciones en Braille
+
+b) Para votantes con discapacidades motoras:
+   - Dispositivos de inhalación y exhalación para navegación y selección
+   - Trackballs o joysticks ergonómicos como alternativas a las pantallas táctiles
+   - Máquinas de votación de altura ajustable para usuarios de sillas de ruedas
+
+c) Para votantes con discapacidad auditiva:
+   - Instrucciones claras y simples en pantalla con videos opcionales de lenguaje de señas
+   - Señales visuales y alertas para complementar cualquier información de audio
+
+7.4. Consistencia de las Papeletas
+
+- Independientemente de la tecnología de asistencia utilizada, el formato de la papeleta impresa debe permanecer consistente con las papeletas estándar.
+- Esto asegura que todos los votos puedan ser contados y verificados utilizando el mismo proceso.
+
+7.5. Soporte de Idiomas
+
+- Las máquinas de votación deben ofrecer múltiples opciones de idioma para acomodar a las minorías lingüísticas.
+- Esto incluye tanto el texto en pantalla como las instrucciones de audio.
+
+7.6. Capacitación y Soporte
+
+- Los trabajadores electorales en las mesas accesibles deben recibir capacitación especializada sobre cómo asistir a votantes con diversas discapacidades.
+- Un equipo de soporte técnico debe estar disponible para abordar rápidamente cualquier problema con los dispositivos de asistencia.
+
+7.7. Pruebas Anticipadas
+
+- Todas las características de accesibilidad deben ser probadas exhaustivamente con bastante anticipación a la elección.
+- Se debe solicitar retroalimentación de grupos de defensa de personas con discapacidad para asegurar la efectividad de estas características.
+
+7.8. Pantallas de Privacidad
+
+- Deben estar disponibles pantallas de privacidad mejoradas para asegurar que los votantes que utilizan dispositivos de asistencia tengan el mismo nivel de privacidad que otros votantes.
+
+8. Ejemplo de Resultados Electorales
+
+Resultados de la Elección Presidencial:
+Candidato A: 1,234,567 votos (45%)
+Candidato B: 1,111,111 votos (40%)
+Candidato C: 432,198 votos (15%)
+
+Total de votos emitidos: 2,777,876
+
+9. Referencias
+
+Sistema de votación en papel de Texas - https://www.votetexas.gov/systems/ess-ivotronic.html
+Sistema de votación de la República Democrática del Congo - https://www.ifes.org/tools-resources/election-snapshots/elections-democratic-republic-congo-2023-general-elections
+Sistema de votación de Paraguay [PDF] - https://tsje.gov.py/static/galeria/contenido/2020/junio/voto-electronico.pdf
+Sistema de votación del Condado de Middlesex - https://www.middlesexcountynj.gov/government/departments/department-of-community-services/board-of-elections/vote/vote-in-person
+
+10. Agradecimientos
+
+[Por añadir: contribuyentes, revisores]
