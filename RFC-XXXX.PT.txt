@@ -1,0 +1,276 @@
+RFC XXXX: Especificação do Sistema Unificado de Votação Eletrônica
+Status: Rascunho  
+Data: 10 de julho de 2024  
+
+Resumo
+
+Este documento especifica um sistema unificado de votação eletrônica projetado para resolver vulnerabilidades comuns em sistemas existentes em todo o mundo. Ele visa fornecer uma experiência de votação segura, transparente e amigável, garantindo a integridade e verificabilidade dos resultados eleitorais.
+
+1. Introdução
+
+Sistemas de votação eletrônica foram implementados em vários países com resultados variados. Muitos sistemas mostraram vulnerabilidades que podem comprometer a integridade das eleições. Este RFC propõe uma abordagem padronizada para a votação eletrônica que prioriza segurança, usabilidade e transparência.
+
+Este RFC propõe uma abordagem padronizada para a votação eletrônica que prioriza segurança, usabilidade e transparência. Uma característica chave deste sistema é que ele permite que os eleitores individuais atuem como auditores de suas próprias seções eleitorais, garantindo a precisão das contagens de votos e aumentando a confiança no processo eleitoral.
+
+2. Visão Geral do Sistema
+
+O sistema proposto consiste nos seguintes componentes:
+
+2.1. Máquina de Votação
+- Interface gráfica para seleção de candidatos
+- Impressora para produzir cédulas de papel com códigos QR
+- Design seguro e isolado da rede para evitar ataques baseados na rede
+- Unidade de DVD para carregar informações dos candidatos
+
+2.2. Aplicativo Móvel
+- Scanner de código QR para contagem e verificação de votos
+- Transmissão de dados segura para monitoramento central
+
+2.3. Sistema Central de Monitoramento
+- Agrega e analisa os dados de votação
+- Fornece atualizações em tempo real e resultados finais
+
+2.4. Armazenamento de Informações dos Candidatos
+- Informações de candidatos e partidos armazenadas em DVDs de leitura única
+- DVDs são mídias de gravação única para evitar modificações
+- Conteúdo facilmente auditável e verificável
+
+3. Processo de Votação
+
+3.1. Autenticação do Eleitor
+
+- Os eleitores devem se registrar bem antes da eleição para permitir a distribuição adequada entre as seções eleitorais.
+- Cada seção eleitoral recebe uma lista específica de eleitores elegíveis.
+- Os três trabalhadores de cada seção devem possuir essa lista.
+- Quando o eleitor chegar, ele deve apresentar um documento de identificação válido.
+- Os trabalhadores da seção confirmam a identidade do eleitor com sua lista.
+- Uma vez verificada, o eleitor é marcado como tendo votado, para evitar voto duplo.
+- Uma vez verificado e marcado como votante, o dedo do eleitor é mergulhado em tinta indelével.
+  Essa tinta não deve ser facilmente removível no dia da votação, evitando tentativas de múltiplos votos com diferentes documentos de identificação.
+- O uso de tinta indelével serve como uma barreira física visível ao voto repetido, complementando o registro eletrônico.
+
+3.2. Interface de Seleção de Candidatos
+
+O sistema suporta dois tipos de telas de seleção de candidatos:
+
+a) Um único candidato por partido:
++----------------------------+  
+|  ELEIÇÃO PRESIDENCIAL      |  
+|                            |  
+| [ ] Partido A  [A]  [Foto] |  
+|     Candidato X            |  
+| [ ] Partido B  [B]  [Foto] |  
+|     Candidato Y            |  
+| [ ] Partido C  [C]  [Foto] |  
+|     Candidato Z            |  
+|                            |  
+|    [PRÓXIMO]   [VOLTAR]    |  
++----------------------------+  
+
+b) Múltiplos candidatos por partido:  
++---------------------------+  
+|  ELEIÇÃO SENATORIAL       |  
+|                           |  
+| [ ] Partido A  [A]        |  
+| [ ] Partido B  [B]        |  
+| [ ] Partido C  [C]        |  
+|                           |  
+|    [PRÓXIMO]   [VOLTAR]   |  
++---------------------------+  
+
+[Após a seleção do partido]  
+
++---------------------------+  
+|  CANDIDATOS DO PARTIDO A  |  
+|                           |  
+| [ ] Candidato 1  [Foto]   |  
+| [ ] Candidato 2  [Foto]   |  
+| [ ] Candidato 3  [Foto]   |  
+|                           |  
+|    [PRÓXIMO]   [VOLTAR]   |  
++---------------------------+  
+
+Nota: [A], [B], [C] representam os logotipos dos partidos e [Foto] representa as fotos dos candidatos.
+
+3.3. Revisão e Confirmação
++---------------------------+  
+|  REVISE SUAS SELEÇÕES     |  
+|                           |  
+| Presidente: Candidato X   |  
+| Senador: Candidato Y      |  
+| Deputado: Candidato Z     |  
+|                           |  
+| [CONFIRMAR]   [EDITAR]    |  
++---------------------------+
+
+3.4. Impressão da Cédula
+
+Após a confirmação, o sistema imprime uma cédula de papel contendo:  
+- Lista dos candidatos selecionados  
+- Código QR com as informações do voto  
+
+O código QR deve ser não criptografado e legível por qualquer dispositivo padrão de leitura de código QR. Ele contém informações de voto no seguinte formato:
+
+```json
+{
+  "uid": "abc123xyz789",
+  "presidente": "Jane Doe",
+  "senador": "John Smith",
+  "deputado": "Alice Johnson"
+}
+```
+
+4. Processo de Contagem de Votos
+
+4.1. Requisitos para os Trabalhadores de Seção
+
+- Locais de votação terão várias seções eleitorais.
+- Cada seção eleitoral deve ter um número ímpar de trabalhadores (mínimo 3) para resolver qualquer discrepância por maioria simples.
+- Todos os trabalhadores em uma seção devem contar os votos de forma independente.
+- Os trabalhadores devem assinar coletivamente o relatório final antes de enviá-lo.
+
+4.2. Contagem via Aplicativo Móvel
+- O aplicativo escaneia códigos QR nas cédulas
+- Soma os votos para cada cargo
+- Gera relatórios para verificação
+
+4.3. Monitoramento Central
+- Agrega dados de todos os locais de votação
+- Fornece atualizações em tempo real
+- Anuncia os resultados finais para cada cargo
+
+5. Considerações de Segurança
+
+5.1. Criptografia e Proteção de Dados
+[A ser expandido: métodos de criptografia, protocolos de proteção de dados]
+
+5.2. Trilhas de Auditoria
+[A ser expandido: mecanismos de registro, cadeia de custódia para cédulas e equipamentos]
+
+5.3. Transparência e Verificação:
+- Relatórios assinados pelos trabalhadores devem ser transmitidos em um formato amplamente compatível e conhecido (por exemplo, PDF).
+- Esses relatórios devem ser acessíveis por meio da interface pública do sistema de votação.
+- Isso permite que qualquer eleitor acesse o sistema e verifique a contagem da sua seção eleitoral.
+- Cada eleitor é responsável por verificar a precisão dos dados da sua seção, atuando efetivamente como um controlador da decisão popular.
+
+5.4. Integridade das Informações dos Candidatos
+- As informações dos candidatos e dos partidos são armazenadas em DVDs de leitura única.
+- Os DVDs são produzidos e distribuídos pela autoridade eleitoral.
+- Cada DVD contém uma assinatura digital para verificação.
+- As máquinas de votação verificam a assinatura digital do DVD antes do uso.
+- Trabalhadores e observadores podem auditar facilmente o conteúdo do DVD.
+
+6. Considerações de Privacidade
+
+6.1. Anonimato dos Eleitores
+
+- As informações das cédulas não devem ser rastreáveis até os eleitores individuais.
+- A máquina de votação não deve armazenar nenhuma informação que possa vincular uma cédula a um eleitor específico ou a um horário de votação.
+
+6.2. Verificação e Reconciliação de Cédulas
+
+- Os trabalhadores devem reconciliar o número de eleitores marcados em sua lista com o número de cédulas impressas.
+- Se houver mais cédulas do que eleitores marcados:
+  - As cédulas excedentes são removidas aleatoriamente antes da contagem.
+  - Esse processo deve ser observado por todos os trabalhadores e qualquer observador autorizado.
+- Se houver menos cédulas do que eleitores marcados:
+  - Essa discrepância deve ser anotada no relatório oficial.
+  - Pode-se iniciar uma investigação para entender a causa (por exemplo, mau funcionamento da máquina, erro humano).
+  - As cédulas disponíveis são contadas como estão, com a discrepância claramente documentada.
+
+6.3. Identificadores de Voto
+
+- Cada cédula contém um identificador único (UID) no código QR.
+- O UID é usado exclusivamente para evitar a contagem dupla por leitores de código QR.
+- UIDs não devem conter ou ser derivados de qualquer informação que possa ser usada para rastrear o voto, como:
+  - Data ou horário do voto
+  - Identificação da máquina de votação
+  - Localização da seção eleitoral
+- O algoritmo para gerar UIDs deve produzir identificadores aleatórios, não sequenciais.
+
+6.4. Substituição de Máquina de Votação
+
+- Se uma máquina de votação for considerada defeituosa e precisar ser substituída:
+  - A substituição não deve afetar a validade dos votos já lançados na máquina defeituosa.
+  - Isso é garantido pela ausência de informações específicas da máquina nos UIDs das cédulas.
+  - Os trabalhadores devem documentar a substituição da máquina em seu relatório oficial, incluindo o número de votos lançados antes e depois da substituição.
+
+6.5. Proteção de Dados
+
+- Todos os componentes eletrônicos do sistema de votação devem empregar criptografia forte para dados em repouso e em trânsito.
+- O acesso às listas de eleitores e aos dados de votação deve ser rigorosamente controlado e registrado.
+- Após a eleição, os dados devem ser arquivados com segurança ou destruídos de acordo com as leis e regulamentos relevantes.
+
+7. Funcionalidades de Acessibilidade
+
+7.1. Seções Eleitorais Dedicadas
+
+- Cada local de votação deve ter pelo menos uma seção eleitoral dedicada para eleitores com deficiência.
+- Essas seções devem estar equipadas com vários dispositivos assistivos e contar com funcionários treinados.
+
+7.2. Processo de Votação para Eleitores com Deficiência
+
+- Um funcionário da seção pode auxiliar o eleitor a alcançar e acessar a máquina de votação.
+- O funcionário deve deixar o eleitor sozinho durante o processo de votação para garantir privacidade e independência.
+
+7.3. Tecnologias Assistivas
+
+As máquinas de votação nas seções acessíveis devem estar equipadas com o seguinte:
+
+a) Para eleitores com deficiência visual:
+   - Fones de ouvido para feedback de áudio do conteúdo da tela
+   - Telas com impressão em grande escala, com opções de ajuste de tamanho de fonte e alto contraste
+   - Teclados ou sobreposições em Braille
+
+b) Para eleitores com deficiência motora:
+   - Dispositivos de sucção e sopro para navegação e seleção
+   - Trackballs ergonômicos ou joysticks como alternativas às telas sensíveis ao toque
+   - Máquinas de votação ajustáveis em altura para usuários de cadeiras de rodas
+
+c) Para eleitores com deficiência auditiva:
+   - Instruções claras e simples na tela, com vídeos opcionais em linguagem de sinais
+   - Pistas visuais e alertas para complementar qualquer informação de áudio
+
+7.4. Consistência da Cédula
+
+- Independentemente da tecnologia assistiva utilizada, o formato da cédula impressa deve permanecer consistente com as cédulas padrão.
+- Isso garante que todos os votos possam ser contados e verificados usando o mesmo processo.
+
+7.5. Suporte a Múltiplos Idiomas
+
+- As máquinas de votação devem oferecer várias opções de idiomas para acomodar minorias linguísticas.
+- Isso inclui texto na tela e instruções de áudio.
+
+7.6. Treinamento e Suporte
+
+- Os funcionários das seções acessíveis devem receber treinamento especializado sobre como auxiliar eleitores com diferentes tipos de deficiência.
+- Uma equipe de suporte técnico deve estar disponível para resolver rapidamente qualquer problema com os dispositivos assistivos.
+
+7.7. Testes Antecipados
+
+- Todas as funcionalidades de acessibilidade devem ser testadas com antecedência antes das eleições.
+- Feedback deve ser solicitado a grupos de defesa dos direitos das pessoas com deficiência para garantir a eficácia desses recursos.
+
+7.8. Barreiras de Privacidade
+
+- Barreiras de privacidade aprimoradas devem estar disponíveis para garantir que os eleitores que utilizam dispositivos assistivos tenham o mesmo nível de privacidade que os demais eleitores.
+
+8. Exemplo de Resultados Eleitorais
+
+**Resultados da Eleição Presidencial:**  
+Candidato A: 1.234.567 votos (45%)  
+Candidato B: 1.111.111 votos (40%)  
+Candidato C: 432.198 votos (15%)
+
+**Total de votos computados**: 2.777.876
+
+9. Referências
+
+Sistema de votação em papel do Texas - https://www.votetexas.gov/systems/ess-ivotronic.html  
+Sistema de votação da República Democrática do Congo - https://www.ifes.org/tools-resources/election-snapshots/elections-democratic-republic-congo-2023-general-elections  
+Sistema de votação do Paraguai [PDF] - https://tsje.gov.py/static/galeria/contenido/2020/junio/voto-electronico.pdf  
+Sistema de votação do Condado de Middlesex - https://www.middlesexcountynj.gov/government/departments/department-of-community-services/board-of-elections/vote/vote-in-person
+
+10. Agradecimentos
+
+[A ser adicionado: colaboradores, revisores]
