@@ -1,0 +1,274 @@
+RFC XXXX: Unified Electronic Voting System Specification
+Status: Draft
+Date: July 10, 2024
+
+Abstract
+
+This document specifies a unified electronic voting system designed to address common vulnerabilities in existing systems worldwide. It aims to provide a secure, transparent, and user-friendly voting experience while ensuring the integrity and verifiability of election results.
+
+1. Introduction
+
+Electronic voting systems have been implemented in various countries with mixed results. Many systems have shown vulnerabilities that could potentially compromise the integrity of elections. This RFC proposes a standardized approach to electronic voting that prioritizes security, usability, and transparency.
+
+This RFC proposes a standardized approach to electronic voting that prioritizes security, usability, and transparency. A key feature of this system is that it empowers individual voters to act as auditors of their own polling stations, ensuring the accuracy of vote counts and enhancing overall trust in the electoral process.
+
+2. System Overview
+
+The proposed system consists of the following components:
+
+2.1. Voting Machine
+- Graphical user interface for candidate selection
+- Printer for producing paper ballots with QR codes
+- Secure, airgapped design to prevent network-based attacks
+- DVD drive for loading candidate information
+
+2.2. Mobile Application
+- QR code scanner for vote counting and verification
+- Secure data transmission to central monitoring
+
+2.3. Central Monitoring System
+- Aggregates and analyzes voting data
+- Provides real-time updates and final results
+
+2.4. Candidate Information Storage
+- Candidate and party information stored on read-only DVDs
+- DVDs are write-once media to prevent modifications
+- Easily auditable and verifiable content
+
+3. Voting Process
+
+3.1. Voter Authentication
+
+- Voters must register well in advance of the election to allow for proper distribution among polling stations.
+- Each polling station is assigned a specific list of eligible voters.
+- The three poll workers at each station must possess this list.
+- When a voter arrives, they must present a valid identification document.
+- Poll workers corroborate the voter's identity against their list.
+- Once verified, the voter is marked as having voted to prevent double voting.
+- Once verified and marked as having voted, the voter's finger is dipped in indelible ink.
+  This ink should not be easily removable on the day of voting, preventing multiple voting attempts with different identification documents.
+- The use of indelible ink serves as a visible, physical barrier to repeat voting, complementing the electronic record-keeping.
+
+3.2. Candidate Selection Interface
+
+The system supports two types of candidate selection screens:
+
+a) Single candidate per party:
++---------------------------+
+|  PRESIDENTIAL ELECTION    |
+|                           |
+| [ ] Party A  [A]  [Photo] |
+|     Candidate X           |
+| [ ] Party B  [B]  [Photo] |
+|     Candidate Y           |
+| [ ] Party C  [C]  [Photo] |
+|     Candidate Z           |
+|                           |
+|    [NEXT]     [BACK]      |
++---------------------------+
+
+b) Multiple candidates per party:
++---------------------------+
+|  SENATE ELECTION          |
+|                           |
+| [ ] Party A  [A]          |
+| [ ] Party B  [B]          |
+| [ ] Party C  [C]          |
+|                           |
+|    [NEXT]     [BACK]      |
++---------------------------+
+
+[After party selection]
+
++---------------------------+
+|  PARTY A CANDIDATES       |
+|                           |
+| [ ] Candidate 1  [Photo]  |
+| [ ] Candidate 2  [Photo]  |
+| [ ] Candidate 3  [Photo]  |
+|                           |
+|    [NEXT]     [BACK]      |
++---------------------------+
+
+Note: [A], [B], [C] represent party logos, and [Photo] represents candidate photos.
+
+3.3. Review and Confirmation
++---------------------------+
+|  REVIEW YOUR SELECTIONS   |
+|                           |
+| President: Candidate X    |
+| Senator: Candidate Y      |
+| Representative: Candidate Z|
+|                           |
+| [CONFIRM]    [EDIT]       |
++---------------------------+
+
+3.4. Ballot Printing
+
+Upon confirmation, the system prints a paper ballot containing:
+- List of selected candidates
+- QR code with vote information
+
+The QR code must be unencrypted and readable by any standard QR code scanning device. It contains vote information in the following format:
+
+{
+  "uid": "abc123xyz789",
+  "president": "Jane Doe",
+  "senator": "John Smith",
+  "representative": "Alice Johnson"
+}
+
+4. Vote Counting Process
+
+4.1. Poll Worker Requirements
+
+- Voting locations will have multiple polling stations.
+- Each polling station must have an odd number of poll workers (minimum 3) to resolve any discrepancies by simple majority.
+- All workers at a station must independently count votes.
+- Workers must collectively sign off on the final report before submission.
+
+4.2. Mobile Application Counting
+- App scans QR codes on ballots
+- Tallies votes for each position
+- Generates reports for verification
+
+4.3. Central Monitoring
+- Aggregates data from all voting locations
+- Provides real-time updates
+- Announces final results for each position
+
+5. Security Considerations
+
+5.1. Encryption and Data Protection
+[To be expanded: encryption methods, data protection protocols]
+
+5.2. Audit Trails
+[To be expanded: logging mechanisms, chain of custody for ballots and equipment]
+
+5.3. Transparency and Verification:
+- Reports signed by poll workers must be transmitted in a widely compatible, known format (e.g., PDF).
+- These reports should be made accessible through the voting system's public interface.
+- This allows any voter to access the system and verify the count from their own polling station.
+- Each voter is responsible for verifying the accuracy of their polling station's data, effectively acting as a controller of the popular decision.
+
+5.4. Candidate Information Integrity
+- Candidate and party information is stored on read-only DVDs
+- DVDs are produced and distributed by the electoral authority
+- Each DVD contains a digital signature for verification
+- Voting machines verify the DVD's digital signature before use
+- Poll workers and observers can easily audit DVD contents
+
+6. Privacy Considerations
+
+6.1. Voter Anonymity
+
+- Ballot information must not be traceable to individual voters.
+- The voting machine must not store any information that could link a ballot to a specific voter or voting time.
+
+6.2. Ballot Verification and Reconciliation
+
+- Poll workers must reconcile the number of marked voters on their list with the number of printed ballots.
+- If there are more ballots than marked voters:
+  - The excess ballots are removed randomly before counting.
+  - This process should be observed by all poll workers and any authorized observers.
+- If there are fewer ballots than marked voters:
+  - This discrepancy must be noted in the official report.
+  - An investigation may be initiated to understand the cause (e.g., machine malfunction, human error).
+  - The available ballots are counted as is, with the discrepancy clearly documented.
+
+6.3. Vote Identifiers
+
+- Each ballot contains a unique identifier (UID) in the QR code.
+- The UID is used solely to prevent double-counting by QR code readers.
+- UIDs must not contain or be derived from any information that could be used to trace the vote, such as:
+  - Date or time of the vote
+  - Identification of the voting machine
+  - Location of the polling station
+- The algorithm for generating UIDs should produce random, non-sequential identifiers.
+
+6.4. Voting Machine Replacement
+
+- If a voting machine is found to be defective and needs replacement:
+  - The replacement should not affect the validity of votes already cast on the defective machine.
+  - This is ensured by the lack of machine-specific information in the ballot UIDs.
+  - Poll workers should document the machine replacement in their official report, including the number of votes cast before and after the replacement.
+
+6.5. Data Protection
+
+- All electronic components of the voting system must employ strong encryption for data at rest and in transit.
+- Access to voter lists and voting data should be strictly controlled and logged.
+- After the election, data should be securely archived or destroyed according to relevant laws and regulations.
+
+7. Accessibility Features
+
+7.1. Dedicated Polling Stations
+
+- Each voting location should have at least one dedicated polling station for voters with disabilities.
+- These stations should be equipped with various assistive devices and staffed by trained personnel.
+
+7.2. Voting Process for Disabled Voters
+
+- A poll worker may assist the voter in reaching and accessing the voting machine.
+- The poll worker must leave the voter alone during the actual voting process to ensure privacy and independence.
+
+7.3. Assistive Technologies
+
+The voting machines at accessible polling stations should be equipped with the following:
+
+a) For visually impaired voters:
+   - Headphones for audio feedback of screen content
+   - Large print displays with adjustable font sizes and high contrast options
+   - Braille keypads or overlays
+
+b) For voters with motor impairments:
+   - Sip-and-puff devices for navigation and selection
+   - Ergonomic trackballs or joysticks as alternatives to touchscreens
+   - Height-adjustable voting machines for wheelchair users
+
+c) For voters with hearing impairments:
+   - Clear, simple on-screen instructions with optional sign language videos
+   - Visual cues and alerts to supplement any audio information
+
+7.4. Ballot Consistency
+
+- Regardless of the assistive technology used, the format of the printed ballot must remain consistent with standard ballots.
+- This ensures that all votes can be counted and verified using the same process.
+
+7.5. Language Support
+
+- Voting machines should offer multiple language options to accommodate linguistic minorities.
+- This includes both on-screen text and audio instructions.
+
+7.6. Training and Support
+
+- Poll workers at accessible stations should receive specialized training on assisting voters with various disabilities.
+- A technical support team should be on call to quickly address any issues with assistive devices.
+
+7.7. Advance Testing
+
+- All accessibility features should be thoroughly tested well in advance of the election.
+- Feedback should be solicited from disability advocacy groups to ensure the effectiveness of these features.
+
+7.8. Privacy Screens
+
+- Enhanced privacy screens should be available to ensure that voters using assistive devices have the same level of privacy as other voters.
+
+8. Example Election Results
+
+Presidential Election Results:
+Candidate A: 1,234,567 votes (45%)
+Candidate B: 1,111,111 votes (40%)
+Candidate C: 432,198 votes (15%)
+
+Total votes cast: 2,777,876
+
+9. References
+
+Texas paper voting system - https://www.votetexas.gov/systems/ess-ivotronic.html
+D.R. Congo voting system - https://www.ifes.org/tools-resources/election-snapshots/elections-democratic-republic-congo-2023-general-elections
+Paraguay voting system [PDF] - https://tsje.gov.py/static/galeria/contenido/2020/junio/voto-electronico.pdf
+Middlesex County voting system - https://www.middlesexcountynj.gov/government/departments/department-of-community-services/board-of-elections/vote/vote-in-person
+
+10. Acknowledgments
+
+[To be added: contributors, reviewers]
